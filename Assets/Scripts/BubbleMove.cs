@@ -9,6 +9,8 @@ public class BubbleMove : MonoBehaviour {
 	//	private Transform bubbleSelection = null;
 	public GameObject bubblePrefab;
 	private static GameObject bubbleSelect = null;
+//	public float speed;
+//	float step = speed * Time.deltaTime;
 
 
 	// Use this for initialization
@@ -19,19 +21,36 @@ public class BubbleMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
-
+		if (Input.touchCount > 0) {
 			bubbleSelect = null;
-			Ray ray = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
-			RaycastHit hit;
+			Touch touch = Input.GetTouch (0);
+			if (touch.phase == TouchPhase.Began) {
+				Ray ray = Camera.main.ScreenPointToRay (touch.position);
+				RaycastHit hit;
 
-			if (Physics.Raycast (ray, out hit, 100)) {
-				bubbleSelect = hit.transform.gameObject;
-				Destroy (bubbleSelect);
+				if (Physics.Raycast (ray, out hit, 100)) {
+					bubbleSelect = hit.transform.gameObject;
+				}
 			}
-			Debug.Log (bubbleSelect.transform.position);
-
+			if (touch.phase == TouchPhase.Moved && touch.phase != TouchPhase.Stationary) {
+				Vector3 fingerPosition = Camera.main.ScreenToWorldPoint (new Vector3 (touch.position.x, touch.position.y, 0.0f));
+				bubbleSelect.transform.position = Vector3.MoveTowards (bubbleSelect.transform.position, fingerPosition, 2 * Time.deltaTime);
+//				bubbleSelect.transform.position.y = Vector3.MoveTowards(bubbleSelect.position.y, fingerPosition.position.y, step);
+			}
 		}
+
+//		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+//
+//			bubbleSelect = null;
+//			Ray ray = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
+//			RaycastHit hit;
+//
+//			if (Physics.Raycast (ray, out hit, 100)) {
+//				bubbleSelect = hit.transform.gameObject;
+//				Destroy (bubbleSelect);
+//			}
+//			Debug.Log (bubbleSelect.transform.position);
+//
+//		}
 	}
 }

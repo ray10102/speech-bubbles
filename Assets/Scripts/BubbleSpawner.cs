@@ -14,6 +14,8 @@ public class BubbleSpawner : MonoBehaviour
     public static float spawnDist;
     private bool spawning;
     private bool done;
+    public GameObject ghost;
+    private static float startScale;
 
 	void OnEnable() {
 		UnityARSessionNativeInterface.ARFrameUpdatedEvent += ARFrameUpdated;
@@ -27,7 +29,12 @@ public class BubbleSpawner : MonoBehaviour
         done = true;
         // Starts not creating a bubble
         currentBubble = null;
-        spawnDist = 1f;
+        ghost.SetActive(true);
+
+        // spawn distance
+        spawnDist = .5f;
+        // starting scale
+        startScale = .3f;
     }
 
     private void Update() {
@@ -39,14 +46,17 @@ public class BubbleSpawner : MonoBehaviour
     public void StartSpawn() {
         spawning = true;
         done = false;
+        ghost.SetActive(false);
     }
 
     public void EndSpawn() {
         // Triggers bubble release animation, stops updating bubble location
         currentBubble.GetComponentInChildren<Bubble>().releaseBubble();
         MicrophoneInput.StopRecord();
+        spawning = false;
         currentBubble = null;
         done = true;
+        ghost.SetActive(true);
     }
 
     public void ARFrameUpdated(UnityARCamera camera) {
@@ -56,6 +66,7 @@ public class BubbleSpawner : MonoBehaviour
         if (spawning) {
             if (currentBubble == null) {
                 currentBubble = Instantiate(bubblePrefab, bubblePosition, transform.rotation) as GameObject;
+                currentBubble.transform.localScale = new Vector3(startScale, startScale, startScale);
                 currentBubble.transform.parent = bubbleParent;
                 MicrophoneInput.StartRecord(currentBubble.GetComponentInChildren<AudioSource>());
             } else {
