@@ -158,4 +158,23 @@ public class Bubble : MonoBehaviour {
             wave.stopSound();
         }
     }
+
+    public void setColorRed() {
+        selectedColor = Color.RED;
+    }
+    public void setColorBlue() {
+        selectedColor = Color.BLUE;
+    }
+    public void setColorYellow() {
+        selectedColor = Color.YELLOW;
+    }
+    public void setColorPurple() {
+        selectedColor = Color.PURPLE;
+    }
+    public void setColorGreen() {
+        selectedColor = Color.GREEN;
+    }
+    public void setColorNone() {
+        selectedColor = Color.NONE;
+    }
 }

@@ -13,6 +13,10 @@ public class GhostBubble : MonoBehaviour {
         UnityARSessionNativeInterface.ARFrameUpdatedEvent -= ARFrameUpdated;
     }
 
+	void Start() {
+		transform.localScale = new Vector3 (BubbleSpawner.startScale, BubbleSpawner.startScale, BubbleSpawner.startScale);
+	}
+
     public void ARFrameUpdated(UnityARCamera camera) {
         Matrix4x4 matrix = new Matrix4x4();
         matrix.SetColumn(3, camera.worldTransform.column3);

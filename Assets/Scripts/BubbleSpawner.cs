@@ -15,7 +15,7 @@ public class BubbleSpawner : MonoBehaviour
     private bool spawning;
     private bool done;
     public GameObject ghost;
-    private static float startScale;
+    public static float startScale;
 
 	void OnEnable() {
 		UnityARSessionNativeInterface.ARFrameUpdatedEvent += ARFrameUpdated;
