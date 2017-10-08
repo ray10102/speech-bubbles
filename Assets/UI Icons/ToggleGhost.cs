@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearAll : MonoBehaviour {
+public class ToggleGhost : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

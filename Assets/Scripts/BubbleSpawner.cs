@@ -16,6 +16,7 @@ public class BubbleSpawner : MonoBehaviour
     private bool done;
     public GameObject ghost;
     public static float startScale;
+    public static bool ghostOn;
 
 	void OnEnable() {
 		UnityARSessionNativeInterface.ARFrameUpdatedEvent += ARFrameUpdated;
@@ -46,7 +47,7 @@ public class BubbleSpawner : MonoBehaviour
     public void StartSpawn() {
         spawning = true;
         done = false;
-        if (ghost != null) {
+        if (ghost != null && ghostOn) {
             ghost.SetActive(false);
         }
     }
@@ -58,7 +59,7 @@ public class BubbleSpawner : MonoBehaviour
         spawning = false;
         currentBubble = null;
         done = true;
-        if (ghost != null) {
+        if (ghost != null && ghostOn) {
             ghost.SetActive(true);
         }
     }
@@ -77,6 +78,10 @@ public class BubbleSpawner : MonoBehaviour
                 currentBubble.transform.position = bubblePosition;
             }
         }
+    }
+
+    public void ToggleGhost() {
+        ghostOn = !ghostOn;
     }
 }
 

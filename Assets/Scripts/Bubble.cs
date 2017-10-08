@@ -127,11 +127,13 @@ public class Bubble : MonoBehaviour {
             audioSource = GetComponent<AudioSource>();
         }
         if (nextBubbles.Count == 1) {
+            Debug.Log("Playing sound 1 next");
             audioSource.loop = false;
             audioSource.Play();
             Invoke("playNext", audioSource.clip.length);
             wave.playSound();
         } else {
+            Debug.Log("Playing sound ");
             audioSource.loop = true;
             audioSource.Play();
             wave.playSound();
