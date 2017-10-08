@@ -17,6 +17,7 @@ public class BubbleSpawner : MonoBehaviour
     public GameObject ghost;
     public static float startScale;
     public static bool ghostOn;
+    private Animator anim;
 
 	void OnEnable() {
 		UnityARSessionNativeInterface.ARFrameUpdatedEvent += ARFrameUpdated;
@@ -31,6 +32,7 @@ public class BubbleSpawner : MonoBehaviour
         // Starts not creating a bubble
         currentBubble = null;
         ghost.SetActive(true);
+        anim = GetComponent<Animator>();
 
         // spawn distance
         spawnDist = .5f;
@@ -50,6 +52,10 @@ public class BubbleSpawner : MonoBehaviour
         if (ghost != null && ghostOn) {
             ghost.SetActive(false);
         }
+        if (anim != null) {
+            anim = GetComponent<Animator>();
+        }
+        anim.SetTrigger("slideUp");
     }
 
     public void EndSpawn() {
@@ -62,6 +68,10 @@ public class BubbleSpawner : MonoBehaviour
         if (ghost != null && ghostOn) {
             ghost.SetActive(true);
         }
+        if (anim != null) {
+            anim = GetComponent<Animator>();
+        }
+        anim.SetTrigger("slideDown");
     }
 
     public void ARFrameUpdated(UnityARCamera camera) {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DeleteButton : MonoBehaviour {
-    GameObject parent;
+    public GameObject parent;
 
     public void ClearAll() {
         foreach(Transform child in parent.transform) {
