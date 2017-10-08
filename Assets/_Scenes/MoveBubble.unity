@@ -341,7 +341,7 @@ Prefab:
     - target: {fileID: 224321999851673188, guid: aebd3292013a0ef4d8104af8ec7a15c2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 15.3
+      value: 15.299988
       objectReference: {fileID: 0}
     - target: {fileID: 114871762398478292, guid: aebd3292013a0ef4d8104af8ec7a15c2,
         type: 2}
@@ -822,6 +822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bubblePrefab: {fileID: 1092208577314854, guid: 041149fc4597cf640bc9bdfd09f1c961,
     type: 2}
+  m_HitBubbleTransform: {fileID: 1143248722}
 --- !u!4 &1955005825
 Transform:
   m_ObjectHideFlags: 0

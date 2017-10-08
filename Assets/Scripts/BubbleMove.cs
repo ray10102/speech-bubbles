@@ -37,18 +37,48 @@ public class BubbleMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+		if (Input.touchCount > 0 && m_HitBubbleTransform != null) {
+			var touch = Input.GetTouch(0);
 
-			bubbleSelect = null;
-			Ray ray = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
-			RaycastHit hit;
+			if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved) {
 
-			if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
-				bubbleSelect = hit.transform.gameObject;
+				var screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
+				ARPoint point = new ARPoint {
+					x = screenPosition.x,
+					y = screenPosition.y
+				};
+
+				// Prioritize results types.  
+				// We want bubbles to float in space, so commented out plane detection.
+				ARHitTestResultType[] resultTypes = {
+//					ARHitTestResultType.ARHitTestResultTypeExistingPlaneUsingExtent, 
+					// if you want to use infinite planes use this:
+					//ARHitTestResultType.ARHitTestResultTypeExistingPlane,
+//					ARHitTestResultType.ARHitTestResultTypeHorizontalPlane, 
+					ARHitTestResultType.ARHitTestResultTypeFeaturePoint
+				};
+
+				foreach (ARHitTestResultType resultType in resultTypes) {
+					if (HitBubblesWithResultType (point, resultType)) {
+						return;
+					}
+				}
 
 			}
-			Debug.Log (bubbleSelect.transform.position);
-
 		}
+
+//		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+//
+//			bubbleSelect = null;
+//			Ray ray = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
+//			RaycastHit hit;
+//
+//			if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
+//				bubbleSelect = hit.transform.gameObject;
+//
+//			}
+//			Debug.Log (bubbleSelect.transform.position);
+//
+//		}
 	}
 }
