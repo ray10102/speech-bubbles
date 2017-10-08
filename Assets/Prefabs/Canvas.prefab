@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114013157981197382}
   - component: {fileID: 114871762398478292}
   - component: {fileID: 114694275239155474}
+  - component: {fileID: 95324432340352496}
   m_Layer: 5
   m_Name: Spawn Button
   m_TagString: Untagged
@@ -41,7 +42,6 @@ GameObject:
   - component: {fileID: 223096948944056316}
   - component: {fileID: 114898211329055426}
   - component: {fileID: 114508102951916518}
-  - component: {fileID: 114399704081031994}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -49,6 +49,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &95324432340352496
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1077621783890178}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c6acf24a91003ce4695dd97b612b46c5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114013157981197382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -61,32 +78,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
+  m_Sprite: {fileID: 21300000, guid: b5aedf2e7725545fda8b1dbee5dba271, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114399704081031994
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1081669718355954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 121f7b5a35b1cdf4db644f391da44246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114508102951916518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,9 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c016aeb8e72c41cf93d4cb08efdba57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleSpeed: 0
-  bubblePrefab: {fileID: 1410382169810582, guid: 6aa0b85bd372a4d4c98fcebf6a26b9a3,
+  scaleSpeed: 0.1
+  bubblePrefab: {fileID: 1084458483515404, guid: 262f10c98846442e293ade199f5d1924,
     type: 2}
+  bubbleParent: {fileID: 0}
 --- !u!114 &114871762398478292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,23 +136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 114694275239155474}
-          m_MethodName: GrowBubble
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 3
     callback:
       m_PersistentCalls:
@@ -163,7 +153,7 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 4
+  - eventID: 2
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -241,10 +231,10 @@ RectTransform:
   m_Father: {fileID: 224779574560222700}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.21173888, y: 0}
-  m_AnchorMax: {x: 0.79229563, y: 0.21388887}
-  m_AnchoredPosition: {x: -0.5, y: 19.5}
-  m_SizeDelta: {x: 0.8899994, y: -19.779999}
+  m_AnchorMin: {x: 0.30656412, y: 0}
+  m_AnchorMax: {x: 0.68956417, y: 0.147557}
+  m_AnchoredPosition: {x: 1.5, y: 15.3}
+  m_SizeDelta: {x: 1.6600037, y: -16.86}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224779574560222700
 RectTransform:

@@ -12,8 +12,8 @@ public class Bubble : MonoBehaviour {
     private MeshRenderer mesh;
     public static float scaleUnit;
     public List<Bubble> nextBubbles;
-    public enum Color { NONE, RED, BLUE, GREEN, YELLOW };
-    public Material none, red, blue, green, yellow;
+    public enum Color { NONE, RED, BLUE, GREEN, YELLOW, PURPLE };
+    public Material none, red, blue, green, yellow, purple;
     public static Color selectedColor;
 
 	// Use this for initialization
@@ -45,6 +45,7 @@ public class Bubble : MonoBehaviour {
 
     public void releaseBubble() {
         anim.SetTrigger("release");
+        wave.spawned();
     }
 
     public void SetScale(float scale) {
@@ -64,22 +65,34 @@ public class Bubble : MonoBehaviour {
     }
 
     public void changeColor(Color color) {
+        wave.changeColor(color);
         switch (color) {
             case Color.NONE:
                 mesh.material = none;
                 break;
             case Color.RED:
-                mesh.material = red;
+                setMaterial(red);
                 break;
             case Color.GREEN:
-                mesh.material = green;
+                setMaterial(green);
                 break;
             case Color.BLUE:
-                mesh.material = blue;
+                setMaterial(blue);
                 break;
             case Color.YELLOW:
-                mesh.material = yellow;
+                setMaterial(yellow);
                 break;
+            case Color.PURPLE:
+                setMaterial(purple);
+                break;
+        }
+    }
+
+    private void setMaterial(Material mat) {
+        if (mat != null) {
+            mesh.material = mat;
+        } else {
+            mesh.material = none;
         }
     }
 
