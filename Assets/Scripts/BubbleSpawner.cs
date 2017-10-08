@@ -82,6 +82,7 @@ public class BubbleSpawner : MonoBehaviour
 
     public void ToggleGhost() {
         ghostOn = !ghostOn;
+        ghost.SetActive(ghostOn);
     }
 }
 
