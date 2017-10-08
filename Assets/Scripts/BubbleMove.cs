@@ -22,7 +22,7 @@ public class BubbleMove : MonoBehaviour {
 	void Update () {
 
 		if (Input.touchCount > 0) {
-			bubbleSelect = null;
+//			bubbleSelect = null;
 			Touch touch = Input.GetTouch (0);
 			if (touch.phase == TouchPhase.Began) {
 				Ray ray = Camera.main.ScreenPointToRay (touch.position);

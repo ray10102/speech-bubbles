@@ -177,4 +177,9 @@ public class Bubble : MonoBehaviour {
     public void setColorNone() {
         selectedColor = Color.NONE;
     }
+
+    public void resetBubble() {
+        nextBubbles = new List<Bubble>();
+        audioSource.clip = null;
+    }
 }

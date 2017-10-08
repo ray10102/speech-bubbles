@@ -46,7 +46,9 @@ public class BubbleSpawner : MonoBehaviour
     public void StartSpawn() {
         spawning = true;
         done = false;
-        ghost.SetActive(false);
+        if (ghost != null) {
+            ghost.SetActive(false);
+        }
     }
 
     public void EndSpawn() {
@@ -56,7 +58,9 @@ public class BubbleSpawner : MonoBehaviour
         spawning = false;
         currentBubble = null;
         done = true;
-        ghost.SetActive(true);
+        if (ghost != null) {
+            ghost.SetActive(true);
+        }
     }
 
     public void ARFrameUpdated(UnityARCamera camera) {

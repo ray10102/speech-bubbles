@@ -283,7 +283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 179.95, y: 0}
   m_SizeDelta: {x: 359.9, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &65077359
@@ -843,6 +843,10 @@ Prefab:
     - target: {fileID: 4727853881077306, guid: fe1d1b3c1d8f31e4783c1487f436512e, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168786772652466, guid: fe1d1b3c1d8f31e4783c1487f436512e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fe1d1b3c1d8f31e4783c1487f436512e, type: 2}
@@ -1760,8 +1764,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1205907707}
+  - component: {fileID: 1205907708}
   m_Layer: 5
-  m_Name: GameObject (1)
+  m_Name: Delete Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1786,6 +1791,17 @@ RectTransform:
   m_AnchoredPosition: {x: -159.72, y: 310.06}
   m_SizeDelta: {x: 70.6, y: 72.88}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1205907708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1205907706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c880f5dc52b88b4a82ce8b4e08087b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1237770576
 GameObject:
   m_ObjectHideFlags: 0
