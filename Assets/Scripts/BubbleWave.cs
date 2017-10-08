@@ -20,15 +20,17 @@ public class BubbleWave : MonoBehaviour {
 	}
 
     public void playSound() {
+        if (!anim) {
+            anim = GetComponent<Animator>();
+        }
         anim.SetBool("isPlaying", true);
     }
 
     public void stopSound() {
+        if (!anim) {
+            anim = GetComponent<Animator>();
+        }
         anim.SetBool("isPlaying", false);
-    }
-
-    public void spawned() {
-        anim.SetTrigger("spawned");
     }
 
     public void changeColor(Bubble.Color color) {

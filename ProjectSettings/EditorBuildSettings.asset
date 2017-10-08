@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/UnityARKitPlugin/Examples/UnityARKitScene/UnityARKitScene.unity
     guid: c159f2591a9b5c843b0a0442451f78f8
   - enabled: 0
@@ -39,5 +39,8 @@ EditorBuildSettings:
     path: Assets/_Scenes/PlayBubble.unity
     guid: c3db186747ec44c92a2c844033847353
   - enabled: 0
-    path: Assets/_Scenes/old-MoveBubble.unity
+    path: 
     guid: 7516e7c60fe2b4554aa2538d86e29592
+  - enabled: 1
+    path: Assets/_Scenes/MoveBubble.unity
+    guid: 55445e74f8d97442696fcddea460e6aa

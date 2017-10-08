@@ -24,6 +24,9 @@ public class Bubble : MonoBehaviour {
         anim = GetComponent<Animator>();
         nextBubbles = new List<Bubble>();
         wave = GetComponentInChildren<BubbleWave>();
+        if (wave) {
+            wave.playSound();
+        }
         scaleUnit = 1.1f;
 	}
 
@@ -44,8 +47,14 @@ public class Bubble : MonoBehaviour {
     // BUBBLE ACTIONS
 
     public void releaseBubble() {
+        if (!anim) {
+            anim = GetComponent<Animator>();
+        }
         anim.SetTrigger("release");
-        wave.spawned();
+        if (!wave) {
+            wave = GetComponentInChildren<BubbleWave>();
+        }
+        wave.stopSound();
     }
 
     public void SetScale(float scale) {
@@ -65,6 +74,9 @@ public class Bubble : MonoBehaviour {
     }
 
     public void changeColor(Color color) {
+        if (!wave) {
+            wave = GetComponentInChildren<BubbleWave>();
+        }
         wave.changeColor(color);
         switch (color) {
             case Color.NONE:
@@ -101,6 +113,12 @@ public class Bubble : MonoBehaviour {
     }
 
     public void playSound() {
+        if (!wave) {
+            wave = GetComponentInChildren<BubbleWave>();
+        }
+        if (!audioSource) {
+            audioSource = GetComponent<AudioSource>();
+        }
         if (nextBubbles.Count == 1) {
             audioSource.loop = false;
             audioSource.Play();
@@ -114,12 +132,23 @@ public class Bubble : MonoBehaviour {
     }
 
     public void stopSound() {
+        if (!wave) {
+            wave = GetComponentInChildren<BubbleWave>();
+        }
+        if (!audioSource) {
+            audioSource = GetComponent<AudioSource>();
+        }
         audioSource.Stop();
         wave.stopSound();
     }
 
     private void playNext() {
-        nextBubbles[1].playSound();
-        wave.stopSound();
+        if (!wave) {
+            wave = GetComponentInChildren<BubbleWave>();
+        }
+        if (nextBubbles.Count > 0) {
+            nextBubbles[1].playSound();
+            wave.stopSound();
+        }
     }
 }
