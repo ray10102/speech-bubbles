@@ -44,6 +44,6 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 7516e7c60fe2b4554aa2538d86e29592
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/MoveBubble.unity
     guid: 55445e74f8d97442696fcddea460e6aa

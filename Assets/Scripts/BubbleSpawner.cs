@@ -12,6 +12,7 @@ public class BubbleSpawner : MonoBehaviour
     private static GameObject currentBubble;
     private UnityARCamera arCamera;
     private float timeStart;
+    public static float spawnDist;
 
 	void OnEnable() {
 		UnityARSessionNativeInterface.ARFrameUpdatedEvent += ARFrameUpdated;
@@ -24,6 +25,7 @@ public class BubbleSpawner : MonoBehaviour
     private void Start() {
         // Starts not creating a bubble
         currentBubble = null;
+        spawnDist = 1f;
     }
 
     private void Update() {
@@ -62,7 +64,7 @@ public class BubbleSpawner : MonoBehaviour
     }
 
     private Vector3 getSpawnPosition() {
-        return GetCameraPosition() + (Camera.main.transform.forward * 2f);
+        return GetCameraPosition() + (Camera.main.transform.forward * spawnDist);
     }
 }
 
