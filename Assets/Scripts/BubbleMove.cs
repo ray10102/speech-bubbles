@@ -7,12 +7,27 @@ using UnityEngine.XR.iOS;
 public class BubbleMove : MonoBehaviour {
 
 	//	private Transform bubbleSelection = null;
-
-	// This calculates the distance between the hit point and the transform of the selected bubble
-	//	private Vector3 dist;
-
 	public GameObject bubblePrefab;
 	private static GameObject bubbleSelect = null;
+
+	// Adapted from UnityARHitTestExample
+	public Transform m_HitBubbleTransform;
+
+	bool HitBubblesWithResultType (ARPoint point, ARHitTestResultType resultTypes) {
+		List<ARHitTestResult> hitResults = UnityARSessionNativeInterface.GetARSessionNativeInterface ().HitTest (point, resultTypes);
+		if (hitResults.Count > 0) {
+			foreach (var hitResult in hitResults) {
+				Debug.Log ("Got hit!");
+				m_HitBubbleTransform.position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
+				m_HitBubbleTransform.rotation = UnityARMatrixOps.GetRotation (hitResult.worldTransform);
+				Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_HitBubbleTransform.position.x, m_HitBubbleTransform.position.y, m_HitBubbleTransform.position.z));
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 
 	// Use this for initialization
 	void Start () {
