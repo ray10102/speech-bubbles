@@ -18,6 +18,7 @@ public class BubbleSpawner : MonoBehaviour
     public static float startScale;
     public static bool ghostOn;
     private Animator anim;
+    private static bool isDown;
 
 	void OnEnable() {
 		UnityARSessionNativeInterface.ARFrameUpdatedEvent += ARFrameUpdated;
@@ -29,6 +30,7 @@ public class BubbleSpawner : MonoBehaviour
 
     private void Start() {
         done = true;
+        isDown = true;
         // Starts not creating a bubble
         currentBubble = null;
         ghost.SetActive(true);
@@ -43,6 +45,8 @@ public class BubbleSpawner : MonoBehaviour
     private void Update() {
         if (!done) {
             currentBubble.transform.localScale += (new Vector3(scaleSpeed, scaleSpeed, scaleSpeed) * Time.deltaTime);
+        } else if (!isDown) {
+            SlideDown();
         }
     }
 
@@ -52,10 +56,7 @@ public class BubbleSpawner : MonoBehaviour
         if (ghost != null && ghostOn) {
             ghost.SetActive(false);
         }
-        if (anim != null) {
-            anim = GetComponent<Animator>();
-        }
-        anim.SetTrigger("slideUp");
+        SlideUp();
     }
 
     public void EndSpawn() {
@@ -68,10 +69,7 @@ public class BubbleSpawner : MonoBehaviour
         if (ghost != null && ghostOn) {
             ghost.SetActive(true);
         }
-        if (anim != null) {
-            anim = GetComponent<Animator>();
-        }
-        anim.SetTrigger("slideDown");
+        SlideDown();
     }
 
     public void ARFrameUpdated(UnityARCamera camera) {
@@ -93,6 +91,22 @@ public class BubbleSpawner : MonoBehaviour
     public void ToggleGhost() {
         ghostOn = !ghostOn;
         ghost.SetActive(ghostOn);
+    }
+
+    public void SlideDown() {
+        if (anim != null) {
+            anim = GetComponent<Animator>();
+        }
+        anim.SetTrigger("slideDown");
+        isDown = true;
+    }
+
+    public void SlideUp() {
+        if (anim != null) {
+            anim = GetComponent<Animator>();
+        }
+        anim.SetTrigger("slideUp");
+        isDown = false;
     }
 }
 
