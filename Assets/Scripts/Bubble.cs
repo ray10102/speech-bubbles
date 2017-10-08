@@ -9,7 +9,7 @@ public class Bubble : MonoBehaviour {
     private Animator anim;
     private BubbleWave wave;
     private Color color;
-    private MeshRenderer mesh;
+    private Renderer mesh;
     public static float scaleUnit;
     public List<Bubble> nextBubbles;
     public enum Color { NONE, RED, BLUE, GREEN, YELLOW, PURPLE };
@@ -19,7 +19,7 @@ public class Bubble : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         changeColor(selectedColor);
-        mesh = GetComponent<MeshRenderer>();
+        mesh = GetComponent<Renderer>();
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         nextBubbles = new List<Bubble>();
@@ -28,19 +28,20 @@ public class Bubble : MonoBehaviour {
             wave.playSound();
         }
         scaleUnit = 1.1f;
+        selectedColor = Color.RED;
 	}
 
     private void OnTriggerEnter(Collider other) {
 		Debug.Log("collided");
         if (other.gameObject.name == "CameraCollider") {
-            stopSound();
+            playSound();
         }
     }
 
     private void OnTriggerExit(Collider other) {
 		Debug.Log("out");
         if (other.gameObject.name == "CameraCollider") {
-            playSound();
+            stopSound();
         }
     }
 
@@ -77,6 +78,9 @@ public class Bubble : MonoBehaviour {
         if (!wave) {
             wave = GetComponentInChildren<BubbleWave>();
         }
+        if (!mesh) {
+            mesh = GetComponent<Renderer>();
+        }
         wave.changeColor(color);
         switch (color) {
             case Color.NONE:
@@ -101,6 +105,9 @@ public class Bubble : MonoBehaviour {
     }
 
     private void setMaterial(Material mat) {
+        if (!mesh) {
+            mesh = GetComponent<Renderer>();
+        }
         if (mat != null) {
             mesh.material = mat;
         } else {

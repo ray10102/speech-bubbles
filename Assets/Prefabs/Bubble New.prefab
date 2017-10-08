@@ -460,12 +460,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextBubbles: []
-  none: {fileID: 0}
-  red: {fileID: 0}
-  blue: {fileID: 0}
-  green: {fileID: 0}
-  yellow: {fileID: 0}
-  purple: {fileID: 0}
+  none: {fileID: 2100000, guid: 09b16544ac08253468075c3f6109f07e, type: 2}
+  red: {fileID: 2100000, guid: 09b16544ac08253468075c3f6109f07e, type: 2}
+  blue: {fileID: 2100000, guid: 09b16544ac08253468075c3f6109f07e, type: 2}
+  green: {fileID: 2100000, guid: 09b16544ac08253468075c3f6109f07e, type: 2}
+  yellow: {fileID: 2100000, guid: 09b16544ac08253468075c3f6109f07e, type: 2}
+  purple: {fileID: 2100000, guid: 09b16544ac08253468075c3f6109f07e, type: 2}
 --- !u!114 &114881772897193812
 MonoBehaviour:
   m_ObjectHideFlags: 1

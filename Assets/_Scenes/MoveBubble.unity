@@ -686,6 +686,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1152340285 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1348723185856422, guid: 041149fc4597cf640bc9bdfd09f1c961,
+    type: 2}
+  m_PrefabInternal: {fileID: 1123126209}
+--- !u!114 &1152340286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1152340285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116f86fb597fd415e961bcaef7f1b7ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1820985294
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,14 +831,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1955005823}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 875747415679b4465884363897ff9cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bubblePrefab: {fileID: 1092208577314854, guid: 041149fc4597cf640bc9bdfd09f1c961,
     type: 2}
-  m_HitBubbleTransform: {fileID: 1143248722}
 --- !u!4 &1955005825
 Transform:
   m_ObjectHideFlags: 0

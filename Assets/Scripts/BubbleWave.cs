@@ -5,13 +5,13 @@ using UnityEngine;
 public class BubbleWave : MonoBehaviour {
 
     private Animator anim;
-    private MeshRenderer mesh;
+    private Renderer mesh;
     public Material none, red, green, blue, yellow, purple;
 
 	// Use this for initialization
 	void Start () {
         anim = GetComponent<Animator>();
-        mesh = GetComponent<MeshRenderer>();
+        mesh = GetComponent<Renderer>();
 	}
 	
 	// Update is called once per frame
@@ -34,6 +34,9 @@ public class BubbleWave : MonoBehaviour {
     }
 
     public void changeColor(Bubble.Color color) {
+        if(!mesh) {
+            mesh = GetComponent<Renderer>();
+        }
         switch (color) {
             case Bubble.Color.NONE:
                 mesh.material = none;
@@ -57,6 +60,9 @@ public class BubbleWave : MonoBehaviour {
     }
 
     private void setMaterial(Material mat) {
+        if (!mesh) {
+            mesh = GetComponent<Renderer>();
+        }
         if (mat != null) {
             mesh.material = mat;
         } else {

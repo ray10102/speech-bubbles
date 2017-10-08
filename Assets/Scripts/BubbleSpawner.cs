@@ -55,6 +55,8 @@ public class BubbleSpawner : MonoBehaviour
 
     private void ARFrameUpdated(UnityARCamera arCamera) {
         if (currentBubble) {
+            Debug.Log("spawning - current spawn location: " + getSpawnPosition());
+            Debug.Log("spawning - camera position: " + GetCameraPosition());
             currentBubble.transform.position = getSpawnPosition();
         }
     }
