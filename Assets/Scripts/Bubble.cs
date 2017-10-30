@@ -1,125 +1,93 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.iOS;
 
-public class Bubble : MonoBehaviour {
+public class Bubble : ASoundField {
 
-    private AudioSource audioSource;
-    private Animator anim;
-    private BubbleWave wave;
-    private Color color;
-    private Renderer mesh;
-    public static float scaleUnit;
-    public List<Bubble> nextBubbles;
-    public enum Color { NONE, RED, BLUE, GREEN, YELLOW, PURPLE };
-    public Material none, red, blue, green, yellow, purple;
-    public static Color selectedColor;
+    // Private fields
+    protected BubbleWave wave;
+    protected List<Bubble> nextBubbles;
+    protected Bubble currentlyPlaying;
 
-	// Use this for initialization
-	void Start () {
-        changeColor(selectedColor);
-        mesh = GetComponent<Renderer>();
-        audioSource = GetComponent<AudioSource>();
-        anim = GetComponent<Animator>();
+    // Statics
+    public static Transform Parent;
+    public static float SpawnDist;
+    public static float SpawnScaleRate;
+    public static float ScaleFactor;
+    public static float StartScale;
+
+    // Calls ASoundField's Start() and initializes bubble specific fields.
+    protected override void Start () {
+        base.Start();
         nextBubbles = new List<Bubble>();
         wave = GetComponentInChildren<BubbleWave>();
         if (wave) {
             wave.playSound();
+        } else {
+            Debug.LogError("Bubble's wave not found");
         }
-        scaleUnit = 1.1f;
-        selectedColor = Color.RED;
+        ScaleFactor = 1.1f;
+        currentlyPlaying = null;
 	}
-
-    private void OnTriggerEnter(Collider other) {
-		Debug.Log("collided");
-        if (other.gameObject.name == "CameraCollider") {
-            playSound();
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-		Debug.Log("out");
-        if (other.gameObject.name == "CameraCollider") {
-            stopSound();
-        }
-    }
 
     // BUBBLE ACTIONS
 
-    public void releaseBubble() {
+    public override void StartSpawn() {
+        transform.parent.localScale = new Vector3(StartScale, StartScale, StartScale);
+        transform.parent.parent = Parent;
+        MicrophoneInput.StartRecord(audioSource);
+    }
+
+    // Keep increasing size while spawning
+    public override void Spawning() {
+        gameObject.transform.localScale += (new Vector3(SpawnScaleRate, SpawnScaleRate, SpawnScaleRate) * Time.deltaTime);
+    }
+
+    public override void EndSpawn() {
         if (!anim) {
             anim = GetComponent<Animator>();
         }
-        anim.SetTrigger("release");
         if (!wave) {
             wave = GetComponentInChildren<BubbleWave>();
         }
+
+        anim.SetTrigger("release");
         wave.stopSound();
+        MicrophoneInput.StopRecord();
     }
 
-    public void SetScale(float scale) {
+    private void setScale(float scale) {
         if (scale > 0) {
             gameObject.transform.parent.localScale = new Vector3(scale, scale, scale);
         } else {
+            Debug.LogWarning("Attempted to set negative scale.");
             gameObject.transform.parent.localScale = new Vector3(0, 0, 0);
         }
     }
 
-    public void ScaleUp() {
-        gameObject.transform.parent.localScale *= scaleUnit;
+    private void scaleUp() {
+        gameObject.transform.parent.localScale *= ScaleFactor;
     }
 
-    public void ScaleDown() {
-        gameObject.transform.parent.localScale /= scaleUnit;
+    private void scaleDown() {
+        gameObject.transform.parent.localScale /= ScaleFactor;
     }
 
-    public void changeColor(Color color) {
+    public override void SetColor(Color color) {
+        base.SetColor(color);
         if (!wave) {
             wave = GetComponentInChildren<BubbleWave>();
         }
-        if (!mesh) {
-            mesh = GetComponent<Renderer>();
-        }
         wave.changeColor(color);
-        switch (color) {
-            case Color.NONE:
-                mesh.material = none;
-                break;
-            case Color.RED:
-                setMaterial(red);
-                break;
-            case Color.GREEN:
-                setMaterial(green);
-                break;
-            case Color.BLUE:
-                setMaterial(blue);
-                break;
-            case Color.YELLOW:
-                setMaterial(yellow);
-                break;
-            case Color.PURPLE:
-                setMaterial(purple);
-                break;
-        }
-    }
-
-    private void setMaterial(Material mat) {
-        if (!mesh) {
-            mesh = GetComponent<Renderer>();
-        }
-        if (mat != null) {
-            mesh.material = mat;
-        } else {
-            mesh.material = none;
-        }
     }
 
     public void addConnection(Bubble other) {
         this.nextBubbles.Add(other);
     }
 
-    public void playSound() {
+    public override void OnCollideWithUser() {
         if (!wave) {
             wave = GetComponentInChildren<BubbleWave>();
         }
@@ -138,16 +106,17 @@ public class Bubble : MonoBehaviour {
             audioSource.Play();
             wave.playSound();
         }
+        currentlyPlaying = this;
     }
 
-    public void stopSound() {
-        if (!wave) {
-            wave = GetComponentInChildren<BubbleWave>();
-        }
+    public override void OnExitWithUser() {
         if (!audioSource) {
             audioSource = GetComponent<AudioSource>();
         }
         audioSource.Stop();
+        if (!wave) {
+            wave = GetComponentInChildren<BubbleWave>();
+        }
         wave.stopSound();
     }
 
@@ -156,32 +125,14 @@ public class Bubble : MonoBehaviour {
             wave = GetComponentInChildren<BubbleWave>();
         }
         if (nextBubbles.Count > 0) {
-            nextBubbles[1].playSound();
+            nextBubbles[1].OnCollideWithUser();
             wave.stopSound();
+        } else {
+            throw new InvalidOperationException("Cannot play the next bubble when there is no next bubble");
         }
     }
 
-    public void setColorRed() {
-        selectedColor = Color.RED;
-    }
-    public void setColorBlue() {
-        selectedColor = Color.BLUE;
-    }
-    public void setColorYellow() {
-        selectedColor = Color.YELLOW;
-    }
-    public void setColorPurple() {
-        selectedColor = Color.PURPLE;
-    }
-    public void setColorGreen() {
-        selectedColor = Color.GREEN;
-    }
-    public void setColorNone() {
-        selectedColor = Color.NONE;
-    }
-
-    public void resetBubble() {
-        nextBubbles = new List<Bubble>();
-        audioSource.clip = null;
+    public void SetPosition(Vector3 pos) {
+        transform.parent.position = pos;
     }
 }

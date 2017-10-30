@@ -1,3 +1,4 @@
 # speech-bubbles
-#Third party software we used
+
+#Third party software used
 ARKit, Unity
